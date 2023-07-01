@@ -1,0 +1,122 @@
+﻿@model IEnumerable<Doctor_Appointment.Models.Doctor>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+@*<form method="post" action="/Doctors/Index">
+
+    @if (ViewBag.spl != null)
+    {
+        <select name="spectialist" asp-items="@Html.GetEnumSelectList<Spectialist>()">
+            <option></option>
+        </select>
+    }
+    <input type="submit" value="Go" />
+</form>*@
+
+
+<table class="table table-striped table-dark">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FullName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.gender)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.specialist)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Degree)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Clinic_Location)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Clinic_PhoneNumber)
+            </th>
+
+             <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.WatingTime)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.HomeExamination)
+            </th>
+            <th></th>
+            <th class="w-100"></th>
+            <th></th>
+
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model)
+{
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FullName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.gender)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.specialist)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Degree)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Clinic_Location)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Clinic_PhoneNumber)
+            </td>
+
+                <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.WatingTime)
+                </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HomeExamination)
+            </td>
+            <td>
+                    <a asp-action="Edit" asp-route-id="@item.DoctorID" class="btn btn-outline-warning">Edit</a> 
+            </td>
+            <td>
+
+                    <a asp-action="Index" asp-controller="DailyAvailbilities" asp-route-docid="@item.DoctorID" class="btn btn-outline-info">Availbilities</a>
+            </td>
+            <td>
+            <a asp-action="Delete" asp-route-id="@item.DoctorID" class="btn btn-outline-danger">Delete</a>
+
+            </td>     
+        </tr>
+}
+    </tbody>
+</table>
