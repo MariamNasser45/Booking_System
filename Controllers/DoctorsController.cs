@@ -111,7 +111,8 @@ namespace Doctor_Appointment.Controllers
         // GET: DoctorsController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            var doc=Context.Doctors.FirstOrDefault(d=>d.DoctorID == id);
+            return View(doc);
         }
 
         // POST: DoctorsController/Delete/5

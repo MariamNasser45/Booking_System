@@ -64,12 +64,20 @@ namespace Doctor_Appointment.Controllers
             return View();
         }
 
+        //public IActionResult Create(int docid)
+        //{
+        //    ViewData["DoctorID"] = new SelectList(_context.Doctors, "DoctorID", "FullName");
+        //    ViewBag.doc = _context.dailyAvailbilities.FirstOrDefault(d => d.DoctorID == docid);
+        //    return View();
+        //}
+
         // POST: DailyAvailbilities/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("DoctorID,Dayid,date,Clinic_Time,Isavailable")] DailyAvailbility dailyAvailbility)
+        public async Task<IActionResult> Create([Bind("DoctorID,Dayid,Date,Clinic_Time,Isavailable")] DailyAvailbility dailyAvailbility)
         {
             if (ModelState.IsValid)
             {
@@ -113,7 +121,7 @@ namespace Doctor_Appointment.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("DoctorID,Dayid,date,Clinic_Time,Isavailable")] DailyAvailbility dailyAvailbility)
+        public async Task<IActionResult> Edit(int id, [Bind("DoctorID,Dayid,Date,Clinic_Time,Isavailable")] DailyAvailbility dailyAvailbility)
         {
             if (id != dailyAvailbility.Dayid)
             {
@@ -174,10 +182,9 @@ namespace Doctor_Appointment.Controllers
             var dailyAvailbility = await _context.dailyAvailbilities.FindAsync(id);
             if (dailyAvailbility != null)
             {
-                _context.dailyAvailbilities.Remove(dailyAvailbility);
+                Daily.Delete(id);
             }
             
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 

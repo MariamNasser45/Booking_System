@@ -45,11 +45,14 @@ namespace Doctor_Appointment.Repo.Services
             upd_daily.Isavailable = dailyAvailbility.Isavailable;
 
             Context.dailyAvailbilities.Update(upd_daily);
+            Context.SaveChanges();
         }
         public void Delete(int id)
         {
             var del = Context.dailyAvailbilities.FirstOrDefault(d => d.Dayid == id);
             Context.dailyAvailbilities.Remove(del);
+            Context.SaveChanges();
+
         }
     }
 }

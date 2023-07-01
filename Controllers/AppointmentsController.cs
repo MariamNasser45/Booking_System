@@ -25,20 +25,12 @@ namespace Doctor_Appointment.Controllers
 
         // GET: Appointments
 
-        //public async Task<IActionResult> Index(int AppId)
-        //{
-
-        //    ViewBag.date = _context.Appointments.Select(a => a.dailyAvailbility.Dayid);
-
-        //    return View(Repo.GetAll(AppId));
-         
-        //}
-
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int AppId)
         {
 
+            ViewBag.date = _context.Appointments.Select(a => a.dailyAvailbility.Dayid);
 
-            return View(_context.Appointments.ToList());
+            return View(Repo.GetAll(AppId));
 
         }
 

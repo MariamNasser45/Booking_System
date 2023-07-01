@@ -113,7 +113,7 @@
                     <a asp-action="Index" asp-controller="DailyAvailbilities" asp-route-docid="@item.DoctorID" class="btn btn-outline-info">Availbilities</a>
             </td>
             <td>
-            <a asp-action="Delete" asp-route-id="@item.DoctorID" class="btn btn-outline-danger">Delete</a>
+                    <a asp-action="Delete" asp-route-id="@item.DoctorID" class="btn btn-outline-danger" asp-route-id="@item.DoctorID">Delete</a>
 
             </td>     
         </tr>

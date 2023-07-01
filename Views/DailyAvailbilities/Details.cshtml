@@ -32,6 +32,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Dayid">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model?.Dayid" class="btn btn-outline-warning">Edit</a> |
+    <a asp-action="Index" asp-route-docid="@Model.DoctorID" class="btn btn-outline-danger">Back to List</a>
 </div>
