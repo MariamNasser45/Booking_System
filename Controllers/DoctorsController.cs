@@ -35,6 +35,9 @@ namespace Doctor_Appointment.Controllers
         // GET: DoctorsController/Details/5
         public ActionResult Details(int id)
         {
+            //get value of hashset for the doctor
+            ViewBag.day = Context.dailyAvailbilities.Where(d=>d.DoctorID==id).Select(d => new {d.Day ,  d.Date , d.Clinic_Time });
+
             var check = Context.Doctors.FirstOrDefault(c=>c.DoctorID==id);
             if(check!=null)
             {
@@ -100,7 +103,8 @@ namespace Doctor_Appointment.Controllers
             try
             {
                 doctor.Update(id,doc);
-                return RedirectToAction(nameof(Index));
+                Details(id);
+                return View("Details");
             }
             catch
             {
@@ -123,7 +127,7 @@ namespace Doctor_Appointment.Controllers
             try
             {
                 doctor.Delete(id);
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Create));
             }
             catch
             {

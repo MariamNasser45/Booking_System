@@ -65,7 +65,7 @@ namespace Doctor_Appointment.Models
         public int Clinic_PhoneNumber { get; set; }
 
         public ICollection<DailyAvailbility> availableDays { get; set; } = new HashSet<DailyAvailbility>();
-      
+
         public bool HomeExamination { get; set; }
 
         [Required]

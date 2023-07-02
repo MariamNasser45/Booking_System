@@ -1,5 +1,6 @@
 ﻿using Doctor_Appointment.Data;
 using Doctor_Appointment.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Doctor_Appointment.Repo.Services
 {
@@ -21,7 +22,7 @@ namespace Doctor_Appointment.Repo.Services
 
         public Doctor GetById(int id )
         {
-            return Context.Doctors.FirstOrDefault(d => d.DoctorID == id);
+            return Context.Doctors.Where(d => d.DoctorID == id).Include(d=>d.availableDays).FirstOrDefault();
         }
 
         public void Insert(Doctor doctor )
