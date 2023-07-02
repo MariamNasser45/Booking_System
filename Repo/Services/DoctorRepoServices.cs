@@ -61,9 +61,9 @@ namespace Doctor_Appointment.Repo.Services
 
 
         //specialist filter
-        public List<Doctor> GetBySpecialist(Spectialist spl)
+        public List<Doctor> GetBySpecialist(Spectialist spl , MedicalDegree medicalDegree)
         {
-            var docSpl = Context.Doctors.Where(s => s.specialist == spl).ToList();
+            var docSpl = Context.Doctors.Where(s => s.specialist == spl && s.Degree==medicalDegree).ToList();
             return docSpl;
         }
     }

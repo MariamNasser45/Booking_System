@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Doctor_Appointment.Controllers
 {
@@ -26,11 +27,30 @@ namespace Doctor_Appointment.Controllers
             return View(doctor.GetAll());
         }
 
-        //[HttpPost]
-        //public ActionResult Index(Spectialist spectialist)
-        //{
-        //    return View(doctor.GetBySpecialist(spectialist));
-        //}
+        [HttpGet]
+        public ActionResult SpecialistFilter()
+        {
+            return View(doctor.GetAll());
+        }
+
+        [HttpPost]
+        public ActionResult SpecialistFilter(Spectialist spectialist, MedicalDegree medicalDegree)
+        {
+            if(Context.Doctors.Any(s => s.specialist == spectialist && s.Degree==medicalDegree))
+            {
+                try
+                {
+                    return View(doctor.GetBySpecialist(spectialist,medicalDegree));
+
+                }
+                catch(Exception ex)
+                {
+                    throw new Exception(ex.Message);
+                }
+            }
+            return NotFound();
+
+        }
 
         // GET: DoctorsController/Details/5
         public ActionResult Details(int id)

@@ -19,9 +19,7 @@
     <input type="submit" value="Search" />
 </form>
 
-
-
-<table class="table">
+<table class="table table-striped table-dark mt-3">
     <thead>
         <tr>
             <th>
@@ -87,7 +85,7 @@
                     @Html.DisplayFor(modelItem => item.WatingTime)
                 </td>
                 <td>
-                    <a asp-action="Details" asp-controller="Doctors" asp-route-id="@item.DoctorID">Details</a> 
+                    <a asp-action="Details" asp-controller="Doctors" asp-route-id="@item.DoctorID" class="btn btn-outline-info">Details</a> 
                 </td>
             </tr>
         }

@@ -40,29 +40,29 @@ namespace Doctor_Appointment.Controllers
         }
 
 
-        [HttpGet]
-        public ActionResult SpecialistFilter()
-        {
-            ViewBag.Spectialist = Context.Doctors.ToList();
+        //[HttpGet]
+        //public ActionResult SpecialistFilter()
+        //{
+        //    ViewBag.Spectialist = Context.Doctors.ToList();
 
-            return View(DoctorRepo.GetAll());
-        }
+        //    return View(DoctorRepo.GetAll());
+        //}
 
-        [HttpPost]
-        public ActionResult SpecialistFilter(Spectialist spl)
-        {
-            ViewBag.Spectialist = Context.Doctors.ToList();
+        //[HttpPost]
+        //public ActionResult SpecialistFilter(Spectialist spl)
+        //{
+        //    ViewBag.Spectialist = Context.Doctors.ToList();
 
-            if ((Context.Doctors.Any(s => s.specialist == spl)))
-            {
-                List<Doctor> spldoc = DoctorRepo.GetBySpecialist(spl);
+        //    if ((Context.Doctors.Any(s => s.specialist == spl)))
+        //    {
+        //        List<Doctor> spldoc = DoctorRepo.GetBySpecialist(spl);
 
-                return View(spldoc);
+        //        return View(spldoc);
 
-            }
-            return View();
+        //    }
+        //    return View();
 
-        }
+        //}
 
 
     }

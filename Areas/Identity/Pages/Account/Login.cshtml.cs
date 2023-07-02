@@ -132,7 +132,7 @@ namespace Doctor_Appointment.Areas.Identity.Pages.Account
                     }
                     else
                     {
-                        returnUrl ??= Url.Content("~/Doctors/Index");
+                        returnUrl ??= Url.Content("~/Doctors/SpecialistFilter");
                     }
                     _logger.LogInformation("User logged in.");
                     return LocalRedirect(returnUrl);
