@@ -12,6 +12,8 @@ namespace Doctor_Appointment.Models
         [Key]
         public int Dayid { get; set; }
 
+        public DayOfWeek Day { get; set; }
+
         [DataType(DataType.Date)]
         public DateTime Date { get; set; }
 

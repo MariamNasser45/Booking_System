@@ -11,13 +11,6 @@ namespace Doctor_Appointment.Repo.Services
             Context = context;
         }
 
-
-
-        //public List<DailyAvailbility> GetAll()
-        //{
-        //    return Context.dailyAvailbilities.ToList();
-        //}
-
         public List<DailyAvailbility> GetAll(int docid)
         {
             return Context.dailyAvailbilities.Where(d => d.DoctorID == docid).ToList();
@@ -40,6 +33,7 @@ namespace Doctor_Appointment.Repo.Services
             var upd_daily = Context.dailyAvailbilities.FirstOrDefault(d => d.Dayid == id);
 
             upd_daily.DoctorID = dailyAvailbility.DoctorID;
+            upd_daily.Day = dailyAvailbility.Day;
             upd_daily.Date = dailyAvailbility.Date;
             upd_daily.Clinic_Time = dailyAvailbility.Clinic_Time;
             upd_daily.Isavailable = dailyAvailbility.Isavailable;
