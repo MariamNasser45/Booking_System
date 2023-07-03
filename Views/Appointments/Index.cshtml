@@ -18,9 +18,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.patient)
             </th>
-            <th>
+       @*     <th>
                 @Html.DisplayNameFor(model => model.dailyAvailbility.Date)
-            </th>
+            </th>*@
        
             <th>
                 @Html.DisplayNameFor(model => model.AppointmentType)
@@ -40,9 +40,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.patient.FullName)
             </td>
-            <td>
+         @*   <td>
                 @Html.DisplayFor(modelItem => item.dailyAvailbility.Date)
-            </td>
+            </td>*@
        
             <td>
                 @Html.DisplayFor(modelItem => item.AppointmentType)
@@ -51,9 +51,8 @@
                 @Html.DisplayFor(modelItem => item.MedicalHistory)
             </td>
             <td>
-                    <a asp-action="Edit"    asp-route-id="@item.appointmentID">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.appointmentID">Details</a> |
-                    <a asp-action="Delete"  asp-route-id="@item.appointmentID">Delete</a>
+                    <a asp-action="Edit" asp-route-id="@item.appointmentID" asp-route-docId="@item.DoctorID" class="btn btn-outline-warning">Edit</a>
+                    <a asp-action="Delete" asp-route-id="@item.appointmentID" class="btn btn-outline-danger">Delete</a>
             </td>
         </tr>
 }

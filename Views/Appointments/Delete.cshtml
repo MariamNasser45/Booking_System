@@ -15,32 +15,32 @@
             @Html.DisplayNameFor(model => model.doctor)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.doctor.Clinic_Location)
+            @Html.DisplayFor(model => model.doctor.FullName)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.dailyAvailbility.Date)
+            @Html.DisplayNameFor(model => model.doctor.Clinic_Location)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.dailyAvailbility.Date)
+            @Html.DisplayFor(model => model.doctor.Clinic_PhoneNumber)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.doctor.Clinic_PhoneNumber)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.doctor.FullName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DateTime)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DateTime)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.patient)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.patient.EmailAddress)
+            @Html.DisplayFor(model => model.patient.FullName)
         </dd>
-@*        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.AppointmentDay)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.AppointmentDay)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.AppointmentTime)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.AppointmentTime)
-        </dd>*@
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.AppointmentType)
         </dt>
@@ -58,7 +58,7 @@
     <form method="post" asp-action="Delete">
         <input type="hidden" asp-for="DoctorID" />
         <input type="hidden" asp-for="PatientID" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
+        <input type="submit" value="Delete" class="btn btn-outline-danger" /> 
+        <a asp-action="Index" asp-route-PatientID="@Model.PatientID" class="btn btn-outline-dark">My All Appointments</a>
     </form>
 </div>

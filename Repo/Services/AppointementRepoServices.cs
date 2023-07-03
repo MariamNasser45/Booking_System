@@ -14,10 +14,10 @@ namespace Doctor_Appointment.Repo.Services
         }
 
 
-        public List<Appointment> GetAll(int AppId)
+        public List<Appointment> GetAll(int PatientID)
         {
             return Context.Appointments.Include(d => d.doctor)
-                .Include(p => p.patient).Where(d=>d.PatientID==AppId).ToList();
+                .Include(p => p.patient).Where(d=>d.PatientID== PatientID).ToList();
         }
 
 
@@ -44,9 +44,9 @@ namespace Doctor_Appointment.Repo.Services
             Context.SaveChanges();
 
         }
-        public void Delete(int DocId, int PatId)
+        public void Delete(int id)
         {
-            var del_app = Context.Appointments.Where(d => d.DoctorID == DocId && d.PatientID == PatId).FirstOrDefault();
+            var del_app = Context.Appointments.Where(d => d.appointmentID==id).FirstOrDefault();
             Context.Appointments.Remove(del_app);
             Context.SaveChanges();
         }

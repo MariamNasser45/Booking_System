@@ -6,10 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Globalization;
 
 namespace Doctor_Appointment.Controllers
 {
-    //[Authorize(Roles = "Doctor")]
+    [Authorize(Roles = "Doctor")]
     public class DoctorsController : Controller
     {
         public ApplicationDbContext Context { get; }
@@ -26,13 +27,14 @@ namespace Doctor_Appointment.Controllers
         {
             return View(doctor.GetAll());
         }
-
+        [AllowAnonymous]
         [HttpGet]
         public ActionResult SpecialistFilter()
         {
             return View(doctor.GetAll());
         }
-
+       
+        [AllowAnonymous]
         [HttpPost]
         public ActionResult SpecialistFilter(Spectialist spectialist, MedicalDegree medicalDegree)
         {
@@ -51,12 +53,12 @@ namespace Doctor_Appointment.Controllers
             return NotFound();
 
         }
-
+        [AllowAnonymous]
         // GET: DoctorsController/Details/5
         public ActionResult Details(int id)
         {
             //get value of hashset for the doctor
-            ViewBag.day = Context.dailyAvailbilities.Where(d=>d.DoctorID==id).Select(d => new {d.Day ,  d.Date , d.Clinic_Time });
+            ViewBag.day = Context.dailyAvailbilities.Where(d=>d.DoctorID==id).Select(d => new {Day=d.Day ,  Date = d.Date , Clinic_Time=d.Clinic_Time});
 
             var check = Context.Doctors.FirstOrDefault(c=>c.DoctorID==id);
             if(check!=null)

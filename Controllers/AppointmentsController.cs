@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using Doctor_Appointment.Data;
 using Doctor_Appointment.Repo;
 using Doctor_Appointment.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.CodeAnalysis.Elfie.Extensions;
 
 namespace Doctor_Appointment.Controllers
 {
@@ -25,12 +27,10 @@ namespace Doctor_Appointment.Controllers
 
         // GET: Appointments
 
-        public async Task<IActionResult> Index(int AppId)
+        public async Task<IActionResult> Index(int PatientID)
         {
 
-            ViewBag.date = _context.Appointments.Select(a => a.dailyAvailbility.Dayid);
-
-            return View(Repo.GetAll(AppId));
+            return View(Repo.GetAll(PatientID));
 
         }
 
@@ -54,11 +54,24 @@ namespace Doctor_Appointment.Controllers
             return View(Repo.GetById(id));
         }
 
+        [Authorize(Roles = "Patient")]
         // GET: Appointments/Create
-        public IActionResult Create()
+        public IActionResult Create(int id)
         {
             ViewData["DoctorID"] = new SelectList(_context.Doctors, "DoctorID", "FullName");
             ViewData["PatientID"] = new SelectList(_context.Patients, "PatientID", "FullName");
+
+            //using ToShortDateString to ignore time only print date 
+            //using Devide to convert into 12 hours format instead 24
+            var Days = _context.dailyAvailbilities.Where(d => d.DoctorID == id && d.Isavailable==true)
+                .Select(d => new{ d.Day , Date=  d.Date.ToShortDateString() ,Clinic_Time = d.Clinic_Time});
+
+            ViewBag.days =  new SelectList(Days);
+
+            //    var AppType=_context.Appointments.Where(d => d.DoctorID == id).Select(d => d.AppointmentType);
+            //ViewBag.type = new SelectList(AppType);
+
+
             return View();
         }
 
@@ -67,14 +80,17 @@ namespace Doctor_Appointment.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("DoctorID,PatientID,AppointmentDay,AppointmentTime,AppointmentType,MedicalHistory")] Appointment appointment)
+        
+        public async Task<IActionResult> Create([Bind("DoctorID,PatientID,DateTime,AppointmentType,MedicalHistory")] Appointment appointment)
         {
             if(ModelState.IsValid)
             {
 
             try
             {
-                Repo.Insert(appointment);
+                    Repo.Insert(appointment);
+                    Details(appointment.appointmentID);
+                    return View("Details");
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -86,11 +102,10 @@ namespace Doctor_Appointment.Controllers
 
             return RedirectToAction("Details");
         }
-
+        [Authorize(Roles = "Patient")]
         // GET: Appointments/Edit/5
-        public IActionResult Edit(int id)
+        public IActionResult Edit(int id, int docId)
         {
-            ViewBag.date = _context.Appointments.Select(a => a.dailyAvailbility.Dayid);
             
             if (_context.Appointments == null)
             {
@@ -98,13 +113,18 @@ namespace Doctor_Appointment.Controllers
             }
 
             var appointment = _context.Appointments.FirstOrDefault(a => a.appointmentID==id);
+
             if (appointment == null)
             {
                 return NotFound();
             }
-            //ViewBag.DoctorID = new SelectList(_context.Doctors, "DoctorID", "FullName", appointment.DoctorID);
-            //ViewBag.PatientID= new SelectList(_context.Patients, "PatientID", "FullName", appointment.PatientID);
-            return View();
+            var Days = _context.dailyAvailbilities.Where(d => d.DoctorID == docId && d.Isavailable == true)
+             .Select(d => new { d.Day, Date = d.Date.ToShortDateString(), Clinic_Time = d.Clinic_Time });
+
+
+            ViewBag.days = new SelectList(Days);
+
+            return View(appointment);
         }
 
         // POST: Appointments/Edit/5
@@ -112,7 +132,7 @@ namespace Doctor_Appointment.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit([Bind("DoctorID,PatientID,AppointmentDay,AppointmentTime,AppointmentType,MedicalHistory")] Appointment appointment)
+        public async Task<IActionResult> Edit([Bind("DoctorID,PatientID,DateTime,AppointmentType,MedicalHistory")] Appointment appointment)
         {
    
 
@@ -121,6 +141,8 @@ namespace Doctor_Appointment.Controllers
                 try
                 {
                     Repo.Update(appointment.DoctorID,appointment.PatientID,appointment);
+                    Index(appointment.PatientID);
+                    return View("Index");
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -133,36 +155,32 @@ namespace Doctor_Appointment.Controllers
         }
 
         // GET: Appointments/Delete/5
-        public async Task<IActionResult> Delete(int Docid , int Patid)
+        public async Task<IActionResult> Delete(int id)
         {
-            ViewBag.date = _context.Appointments.Select(a => a.dailyAvailbility.Dayid);
 
             var appointment = await _context.Appointments
                 .Include(a => a.doctor)
                 .Include(a => a.patient)
-                .FirstOrDefaultAsync(m => m.DoctorID == Docid && m.PatientID==Patid);
+                .FirstOrDefaultAsync(a => a.appointmentID==id);
 
-            if (appointment != null)
-            {
-                Repo.Delete(appointment.DoctorID,appointment.PatientID);
-            }
-
-            return View();
+            return View(appointment);
         }
 
         // POST: Appointments/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public IActionResult DeleteConfirmed(int DocId, int PatId)
+        public IActionResult DeleteConfirmed(int id, int PatientId)
         {
             //if (_context.Appointments == null)
             //{
             //    return Problem("Entity set 'MedcareDbContext.Appointments'  is null.");
             //}
-            var appointment = _context.Appointments.FirstOrDefault(m=>m.DoctorID== DocId && m.PatientID== PatId);
+            var appointment = _context.Appointments.FirstOrDefault(m=>m.appointmentID == id);
             if (appointment != null)
             {
-                Repo.Delete(DocId , PatId);
+                Repo.Delete(id);
+                Index(PatientId);
+                return View("Index");
 
             }
             return RedirectToAction(nameof(Index));

@@ -66,7 +66,7 @@
                 foreach(var item in day)
                 {
                    <dd>
-                     @item
+                     @item.ToString()
                    </dd>
                 }
           }
@@ -96,6 +96,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Create" asp-controller="Appointments" asp-route-id="DoctorID" asp-route-AppId="PatientID" class="btn btn-outline-success">Book</a> |
-    <a asp-controller="Home" asp-action="SpecialistFilter" class="btn btn-outline-dark">Back to List</a>
+    <a asp-action="Create" asp-controller="Appointments" asp-route-id="@Model.DoctorID" class="btn btn-outline-success">Book</a> |
+    <a asp-controller="Doctors" asp-action="SpecialistFilter" class="btn btn-outline-dark">Back to List</a>
 </div>

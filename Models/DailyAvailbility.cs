@@ -21,5 +21,6 @@ namespace Doctor_Appointment.Models
 
         public bool Isavailable { get; set; }
 
+
     }
 }

@@ -97,7 +97,7 @@ namespace Doctor_Appointment.Controllers
 
                 Daily.Insert(dailyAvailbility);
                 Index(dailyAvailbility.DoctorID);
-                return View(nameof(Index));
+                return View("Index");
                 }
                 catch(Exception ex) 
                 {
