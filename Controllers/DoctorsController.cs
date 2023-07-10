@@ -38,17 +38,25 @@ namespace Doctor_Appointment.Controllers
         [HttpPost]
         public ActionResult SpecialistFilter(Spectialist spectialist, MedicalDegree medicalDegree)
         {
-            if(Context.Doctors.Any(s => s.specialist == spectialist && s.Degree==medicalDegree))
-            {
-                try
-                {
-                    return View(doctor.GetBySpecialist(spectialist,medicalDegree));
+            //if(doctor.CheckSpecialistAndDegreeExistance(spectialist,medicalDegree))
+            //{
 
-                }
-                catch(Exception ex)
+                if(doctor.GetBySpecialist(spectialist, medicalDegree)!=null)
                 {
-                    throw new Exception(ex.Message);
-                }
+                    try
+                    {
+                        return View(doctor.GetBySpecialist(spectialist,medicalDegree));
+
+                    }
+                    catch(Exception ex)
+                    {
+                        throw new Exception(ex.Message);
+                    }
+                //}
+            }
+            else
+            { 
+                return View(doctor.GetAll());
             }
             return NotFound();
 

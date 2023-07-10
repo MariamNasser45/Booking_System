@@ -12,55 +12,55 @@
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FullName)
+            <label asp-for="FullName"></label>
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FullName)
+            <p>@Model.FullName</p>
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.gender)
+            <label asp-for="gender"></label>
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.gender)
+            <p>@Model.gender</p>
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Email)
+            <label asp-for="Email"></label>
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Email)
+            <p>@Model.Email</p>
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.specialist)
+            <label asp-for="specialist"></label>
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.specialist)
+            <p>@Model.specialist</p>
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Degree)
+            <label asp-for="Degree"></label>
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Degree)
+            <p>@Model.Degree</p>
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Description)
+            <label asp-for="Description"></label>
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Description)
+            <p>@Model.Description</p>
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Clinic_Location)
+            <label asp-for="Clinic_Location"></label>
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Clinic_Location)
+            <p>@Model.Clinic_Location</p>
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Clinic_PhoneNumber)
+            <label asp-for="Clinic_PhoneNumber"></label>
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Clinic_PhoneNumber)
+            <p>@Model.Clinic_PhoneNumber</p>
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.availableDays)
+            <label asp-for="availableDays"></label>
         </dt>
            @{
                 foreach(var item in day)
@@ -72,30 +72,30 @@
           }
 
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Price)
+            <label asp-for="Price"></label>
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Price)
+            <p>@Model.Price</p>
         </dd>
 
 
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.WatingTime)
+            <label asp-for="WatingTime"></label>
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.WatingTime)
+            <p>@Model.WatingTime</p>
         </dd>
 
 
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.HomeExamination)
+            <label asp-for="HomeExamination"></label>
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.HomeExamination)
+            <p>@Model.HomeExamination</p>
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Create" asp-controller="Appointments" asp-route-id="@Model.DoctorID" class="btn btn-outline-success">Book</a> |
+    <a asp-action="Create" asp-controller="Appointments" asp-route-id="@Model.DoctorID" class="btn btn-outline-success">Book</a> 
     <a asp-controller="Doctors" asp-action="SpecialistFilter" class="btn btn-outline-dark">Back to List</a>
 </div>

@@ -14,18 +14,18 @@ namespace Doctor_Appointment.Controllers
     public class PatientsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IPatientRepo patientRepo;
 
-        public PatientsController(ApplicationDbContext context)
+        public PatientsController(ApplicationDbContext context, IPatientRepo patientRepo)
         {
             _context = context;
+            this.patientRepo = patientRepo;
         }
 
         // GET: Patients
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int PatientId)
         {
-              return _context.Patients != null ? 
-                          View(await _context.Patients.ToListAsync()) :
-                          Problem("Entity set 'MedcareDbContext.Patients'  is null.");
+            return  View(patientRepo.GetById(PatientId));
         }
 
 
@@ -69,9 +69,16 @@ namespace Doctor_Appointment.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(patient);
-                await _context.SaveChangesAsync();
-                return RedirectToAction("SpecialistFilter","Home");
+                try
+                {
+                    patientRepo.Insert(patient);
+                    Index(patient.PatientID);
+                    return View("Index");
+                }
+                catch (Exception ex)
+                {
+
+                }
             }
             return View(patient);
         }

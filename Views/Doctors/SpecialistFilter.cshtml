@@ -10,9 +10,13 @@
     <span class="d-flex justify-content-center mt-3">
 
         
-        <select name="spectialist" class="form-select form-select-sm w-25" aria-label=".form-select-sm example" asp-items="@Html.GetEnumSelectList<Spectialist>()"></select>
+        <select name="spectialist" class="form-select form-select-sm w-25" aria-label=".form-select-sm example" asp-items="@Html.GetEnumSelectList<Spectialist>()">
+            <option>All</option>
+        </select>
 
-        <select name="medicalDegree" class="form-select form-select-sm w-25" style="margin-left:5px;" aria-label=".form-select-sm example" asp-items="@Html.GetEnumSelectList<MedicalDegree>()"></select>
+        <select name="medicalDegree" class="form-select form-select-sm w-25" style="margin-left:5px;" aria-label=".form-select-sm example" asp-items="@Html.GetEnumSelectList<MedicalDegree>()">
+            <option>All</option>
+        </select>
 
         <input type="submit" value="Search" class="btn btn-outline-dark" style="margin-left:5px;"/>
    
@@ -24,31 +28,34 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.FullName)
+                <label asp-for="First().FullName"></label>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.specialist)
+                <label asp-for="First().specialist"></label>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Degree)
+                <label asp-for="First().Degree"></label>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Description)
+                <label asp-for="First().Description"></label>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Clinic_Location)
+                <label asp-for="First().Clinic_Location"></label>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Clinic_PhoneNumber)
+                <label asp-for="First().Clinic_PhoneNumber"></label>
             </th>
+
             <th>
-                @Html.DisplayNameFor(model => model.HomeExamination)
+                <label asp-for="First().HomeExamination"></label>
             </th>
+
             <th>
-                @Html.DisplayNameFor(model => model.Price)
+                <label asp-for="First().Price"></label>
             </th>
+
             <th>
-                @Html.DisplayNameFor(model => model.WatingTime)
+                <label asp-for="First().WatingTime"></label>
             </th>
             <th></th>
         </tr>
@@ -58,33 +65,35 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.FullName)
+                    <p>@item.FullName</p>
+                </td>
+                <td>
+                    <p>@item.specialist</p>
+                </td>
+                <td>
+                    <p>@item.Degree</p>
+                </td>
+                <td>
+                    <p>@item.Description</p>
+                </td>
+                <td>
+                    <p>@item.Clinic_Location</p>
+                </td>
+                <td>
+                    <p>@item.Clinic_PhoneNumber</p>
+                </td>
+                <td>
+                    <p>@item.HomeExamination</p>
                 </td>
 
                 <td>
-                    @Html.DisplayFor(modelItem => item.specialist)
+                    <p>@item.Price</p>
                 </td>
+
                 <td>
-                    @Html.DisplayFor(modelItem => item.Degree)
+                    <p>@item.WatingTime</p>
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Clinic_Location)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Clinic_PhoneNumber)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.HomeExamination)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Price)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.WatingTime)
-                </td>
+
                 <td>
                     <a asp-action="Details" asp-controller="Doctors" asp-route-id="@item.DoctorID" class="btn btn-outline-info">Details</a>
                 </td>

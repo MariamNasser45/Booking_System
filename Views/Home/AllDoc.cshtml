@@ -23,32 +23,37 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.FullName)
+                <label asp-for="First().FullName"></label>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.specialist)
+                <label asp-for="First().specialist"></label>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Degree)
+                <label asp-for="First().Degree"></label>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Description)
+                <label asp-for="First().Description"></label>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Clinic_Location)
+                <label asp-for="First().Clinic_Location"></label>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Clinic_PhoneNumber)
+                <label asp-for="First().Clinic_PhoneNumber"></label>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.HomeExamination)
+                <label asp-for="First().HomeExamination"></label>
             </th>
+
             <th>
-                @Html.DisplayNameFor(model => model.Price)
+                <label asp-for="First().Price"></label>
             </th>
+
             <th>
-                @Html.DisplayNameFor(model => model.WatingTime)
+                <label asp-for="First().WatingTime"></label>
             </th>
+
+            <th></th>
+            <th class="w-100"></th>
             <th></th>
         </tr>
     </thead>
@@ -56,34 +61,35 @@
 @foreach (var item in Model) 
 {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.FullName)
-            </td>
+                <td>
+                    <p>@item.FullName</p>
+                </td>
+                <td>
+                    <p>@item.specialist</p>
+                </td>
+                <td>
+                    <p>@item.Degree</p>
+                </td>
+                <td>
+                    <p>@item.Description</p>
+                </td>
+                <td>
+                    <p>@item.Clinic_Location</p>
+                </td>
+                <td>
+                    <p>@item.Clinic_PhoneNumber</p>
+                </td>
+                <td>
+                    <p>@item.HomeExamination</p>
+                </td>
 
-            <td>
-                @Html.DisplayFor(modelItem => item.specialist)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Degree)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Clinic_Location)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Clinic_PhoneNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.HomeExamination)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.WatingTime)
-            </td>
+                <td>
+                    <p>@item.Price</p>
+                </td>
+
+                <td>
+                    <p>@item.WatingTime</p>
+                </td>
             <td>
                 <a asp-action="Create" asp-controller="Appointments" asp-route-id="@item.DoctorID">Book</a> |
                 <a asp-action="Details" asp-controller="Doctors" asp-route-id="@item.DoctorID">Details</a> |

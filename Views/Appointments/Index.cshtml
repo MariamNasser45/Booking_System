@@ -13,20 +13,17 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.doctor)
+                <label asp-for="First().doctor"></label>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.patient)
+                <label asp-for="First().patient"></label>
             </th>
-       @*     <th>
-                @Html.DisplayNameFor(model => model.dailyAvailbility.Date)
-            </th>*@
        
             <th>
-                @Html.DisplayNameFor(model => model.AppointmentType)
+                <label asp-for="First().AppointmentType"></label>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.MedicalHistory)
+                <label asp-for="First().MedicalHistory"></label>
             </th>
             <th></th>
         </tr>
@@ -35,20 +32,16 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.doctor.FullName)
+                <p>@item.doctor.FullName</p>
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.patient.FullName)
-            </td>
-         @*   <td>
-                @Html.DisplayFor(modelItem => item.dailyAvailbility.Date)
-            </td>*@
-       
-            <td>
-                @Html.DisplayFor(modelItem => item.AppointmentType)
+                <p>@item.patient.FullName</p>
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.MedicalHistory)
+                <p>@item.AppointmentType</p>
+            </td>
+            <td>
+                 <p>@item.MedicalHistory</p>
             </td>
             <td>
                     <a asp-action="Edit" asp-route-id="@item.appointmentID" asp-route-docId="@item.DoctorID" class="btn btn-outline-warning">Edit</a>

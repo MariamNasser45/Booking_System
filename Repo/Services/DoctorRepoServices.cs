@@ -47,7 +47,6 @@ namespace Doctor_Appointment.Repo.Services
             del_Doc.Price= doctor.Price;
             del_Doc.WatingTime= doctor.WatingTime;
 
-            Context.Doctors.Update(del_Doc);
             Context.SaveChanges();
         }
         public void Delete(int id)
@@ -59,6 +58,11 @@ namespace Doctor_Appointment.Repo.Services
             Context.SaveChanges();
         }
 
+
+        public bool CheckSpecialistAndDegreeExistance(Spectialist spl, MedicalDegree medicalDegree)
+        {
+            return Context.Doctors.Any(d => d.specialist==spl && d.Degree==medicalDegree);
+        }
 
         //specialist filter
         public List<Doctor> GetBySpecialist(Spectialist spl , MedicalDegree medicalDegree)

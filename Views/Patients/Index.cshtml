@@ -13,22 +13,22 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.FullName)
+                <label asp-for="First().FullName"></label>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.gender)
+                <label asp-for="First().gender"></label>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Age)
+                <label asp-for="First().Age"></label>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.PhoneNumber)
+                <label asp-for="First().PhoneNumber"></label>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.EmailAddress)
+                <label asp-for="First().EmailAddress"></label>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Address)
+                <label asp-for="First().Address"></label>
             </th>
             <th></th>
         </tr>
@@ -37,22 +37,22 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.FullName)
+                <p>@item.FullName</p>
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.gender)
+                <p>@item.gender</p>
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Age)
+                    <p>@item.Age</p>
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.PhoneNumber)
+                    <p>@item.PhoneNumber</p>
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.EmailAddress)
+                    <p>@item.EmailAddress</p>
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Address)
+                    <p>@item.Address</p>
             </td>
             <td>
                     <a asp-action="Edit" asp-route-id="@item.PatientID" class="btn btn-outline-warning">Edit</a> 

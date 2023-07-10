@@ -17,17 +17,17 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Day)
+                <label asp-for="First().Day"></label>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Date)
+                <label asp-for="First().Date"></label>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Clinic_Time)
+                <label asp-for="First().Clinic_Time"></label>
             </th>
      
             <th>
-                @Html.DisplayNameFor(model => model.Isavailable)
+                <label asp-for="First().Isavailable"></label>
             </th>
             <th></th>
         </tr>
@@ -36,17 +36,17 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Day)
+                    <p>@item.Day</p>
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Date)
+                    <p>@item.Date</p>
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Clinic_Time)
+                    <p>@item.Clinic_Time</p>
             </td>
 
             <td>
-                @Html.DisplayFor(modelItem => item.Isavailable)
+                <p>@item.Isavailable</p>
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Dayid" class="btn btn-outline-info">Edit</a> 
