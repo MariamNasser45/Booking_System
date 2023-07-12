@@ -18,7 +18,7 @@ namespace Doctor_Appointment.Repo.Services
 
         public DailyAvailbility GetById(int id)
         {
-            return Context.dailyAvailbilities.FirstOrDefault(d => d.Dayid == id);
+            return Context.dailyAvailbilities.SingleOrDefault(d => d.Dayid == id);
 
         }
         public void Insert(DailyAvailbility dailyAvailbility)
@@ -30,7 +30,7 @@ namespace Doctor_Appointment.Repo.Services
 
         public void Update(int id, DailyAvailbility dailyAvailbility)
         {
-            var upd_daily = Context.dailyAvailbilities.FirstOrDefault(d => d.Dayid == id);
+            var upd_daily = Context.dailyAvailbilities.SingleOrDefault(d => d.Dayid == id);
 
             upd_daily.DoctorID = dailyAvailbility.DoctorID;
             upd_daily.Day = dailyAvailbility.Day;
@@ -43,10 +43,15 @@ namespace Doctor_Appointment.Repo.Services
         }
         public void Delete(int id)
         {
-            var del = Context.dailyAvailbilities.FirstOrDefault(d => d.Dayid == id);
+            var del = Context.dailyAvailbilities.SingleOrDefault(d => d.Dayid == id);
             Context.dailyAvailbilities.Remove(del);
             Context.SaveChanges();
 
         }
+        public bool CheckExistance(int id)
+        {
+            return Context.dailyAvailbilities.Any(d => d.Dayid == id);
+        }
+
     }
 }

@@ -22,7 +22,7 @@ namespace Doctor_Appointment.Repo.Services
 
         public Doctor GetById(int id )
         {
-            return Context.Doctors.Where(d => d.DoctorID == id).Include(d=>d.availableDays).FirstOrDefault();
+            return Context.Doctors.Where(d => d.DoctorID == id).Include(d=>d.availableDays).SingleOrDefault();
         }
 
         public void Insert(Doctor doctor )
@@ -34,8 +34,8 @@ namespace Doctor_Appointment.Repo.Services
 
         public void Update(int id, Doctor doctor)
         {
-            var del_Doc = Context.Doctors.FirstOrDefault(p => p.DoctorID == id);
-            var doc_WorkDay = Context.dailyAvailbilities.FirstOrDefault(d => d.DoctorID == id);
+            var del_Doc = Context.Doctors.SingleOrDefault(p => p.DoctorID == id);
+            var doc_WorkDay = Context.dailyAvailbilities.SingleOrDefault(d => d.DoctorID == id);
 
             del_Doc.FullName = doctor.FullName;
             del_Doc.Email = doctor.Email;
@@ -51,8 +51,8 @@ namespace Doctor_Appointment.Repo.Services
         }
         public void Delete(int id)
         {
-            var del_Doc = Context.Doctors.FirstOrDefault(p => p.DoctorID == id);
-            var doc_WorkDay = Context.dailyAvailbilities.FirstOrDefault(d => d.DoctorID == id);
+            var del_Doc = Context.Doctors.SingleOrDefault(p => p.DoctorID == id);
+            var doc_WorkDay = Context.dailyAvailbilities.SingleOrDefault(d => d.DoctorID == id);
             Context.dailyAvailbilities.Remove(doc_WorkDay);
             Context.Doctors.Remove(del_Doc);
             Context.SaveChanges();
@@ -64,11 +64,33 @@ namespace Doctor_Appointment.Repo.Services
             return Context.Doctors.Any(d => d.specialist==spl && d.Degree==medicalDegree);
         }
 
+        public bool CheckSpecialistExistance(Spectialist spl)
+        {
+            return Context.Doctors.Any(d => d.specialist == spl);
+        }
+        public bool CheckDegreeExistance(MedicalDegree medicalDegree)
+        {
+            return Context.Doctors.Any(d => d.Degree == medicalDegree);
+        }
         //specialist filter
-        public List<Doctor> GetBySpecialist(Spectialist spl , MedicalDegree medicalDegree)
+        public List<Doctor> GetBySpecialistAndDegree(Spectialist spl , MedicalDegree medicalDegree)
         {
             var docSpl = Context.Doctors.Where(s => s.specialist == spl && s.Degree==medicalDegree).ToList();
             return docSpl;
+        }
+
+        public List<Doctor> GetBySpecialistOnly(Spectialist spl)
+        {
+            return Context.Doctors.Where(d=>d.specialist==spl).ToList();
+        }
+        public List<Doctor> GetByDegreeOnly(MedicalDegree medicalDegree)
+        {
+            return Context.Doctors.Where(d => d.Degree == medicalDegree).ToList();
+
+        }
+        public bool CheckExistance(int id)
+        {
+            return Context.Doctors.Any(d => d.DoctorID == id);
         }
     }
 }

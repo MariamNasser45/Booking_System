@@ -7,6 +7,7 @@ namespace Doctor_Appointment.Models
     public class DailyAvailbility
     {
         [ForeignKey("Doctor")]
+        [Display(Name = "Doctor Name")]
         public int DoctorID { get; set; }
 
         [Key]
@@ -18,7 +19,7 @@ namespace Doctor_Appointment.Models
         public DateTime Date { get; set; }
 
         public TimeSpan Clinic_Time { get; set; }
-
+        [Display(Name = "Is Available")]
         public bool Isavailable { get; set; }
 
 

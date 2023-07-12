@@ -10,7 +10,7 @@ using System.Globalization;
 
 namespace Doctor_Appointment.Controllers
 {
-    [Authorize(Roles = "Doctor")]
+    //[Authorize(Roles = "Doctor")]
     public class DoctorsController : Controller
     {
         public ApplicationDbContext Context { get; }
@@ -38,24 +38,32 @@ namespace Doctor_Appointment.Controllers
         [HttpPost]
         public ActionResult SpecialistFilter(Spectialist spectialist, MedicalDegree medicalDegree)
         {
-            //if(doctor.CheckSpecialistAndDegreeExistance(spectialist,medicalDegree))
-            //{
-
-                if(doctor.GetBySpecialist(spectialist, medicalDegree)!=null)
+            if (doctor.CheckSpecialistAndDegreeExistance(spectialist, medicalDegree))
+            {
+                if (doctor.GetBySpecialistAndDegree(spectialist, medicalDegree) != null)
                 {
                     try
                     {
-                        return View(doctor.GetBySpecialist(spectialist,medicalDegree));
+                        return View(doctor.GetBySpecialistAndDegree(spectialist, medicalDegree));
 
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
                         throw new Exception(ex.Message);
                     }
-                //}
+                }
+
+            }
+            else if(doctor.CheckSpecialistExistance(spectialist)==true && doctor.CheckDegreeExistance(medicalDegree)==false )
+            { 
+                return View(doctor.GetBySpecialistOnly(spectialist));
+            }
+            else if (doctor.CheckDegreeExistance(medicalDegree)==true && doctor.CheckSpecialistExistance(spectialist) == false)
+            {
+                return View(doctor.GetByDegreeOnly(medicalDegree));
             }
             else
-            { 
+            {
                 return View(doctor.GetAll());
             }
             return NotFound();
@@ -68,8 +76,7 @@ namespace Doctor_Appointment.Controllers
             //get value of hashset for the doctor
             ViewBag.day = Context.dailyAvailbilities.Where(d=>d.DoctorID==id).Select(d => new {Day=d.Day ,  Date = d.Date , Clinic_Time=d.Clinic_Time});
 
-            var check = Context.Doctors.FirstOrDefault(c=>c.DoctorID==id);
-            if(check!=null)
+            if(doctor.CheckExistance(id))
             {
                 try
                 {
@@ -83,7 +90,6 @@ namespace Doctor_Appointment.Controllers
               return NotFound();
         }
 
-       
         // GET: DoctorsController/Create
         public ActionResult Create()
         {
@@ -110,12 +116,11 @@ namespace Doctor_Appointment.Controllers
         // GET: DoctorsController/Edit/5
         public ActionResult Edit(int id)
         {
-            var doc=Context.Doctors.FirstOrDefault(d=>d.DoctorID==id);
-            if(doc!=null)
+            if(doctor.CheckExistance(id))
             {
                 try
                 {
-                return View(doc);
+                return View(doctor.GetById(id));
                 }
                 catch (Exception ex)
                 {
@@ -145,8 +150,7 @@ namespace Doctor_Appointment.Controllers
         // GET: DoctorsController/Delete/5
         public ActionResult Delete(int id)
         {
-            var doc=Context.Doctors.FirstOrDefault(d=>d.DoctorID == id);
-            return View(doc);
+            return View(doctor.GetById(id));
         }
 
         // POST: DoctorsController/Delete/5

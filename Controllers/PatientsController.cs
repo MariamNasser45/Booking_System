@@ -23,7 +23,7 @@ namespace Doctor_Appointment.Controllers
         }
 
         // GET: Patients
-        public async Task<IActionResult> Index(int PatientId)
+        public IActionResult Index(int PatientId)
         {
             return  View(patientRepo.GetById(PatientId));
         }
@@ -37,21 +37,14 @@ namespace Doctor_Appointment.Controllers
         }
 
         // GET: Patients/Details/5
-        public async Task<IActionResult> Details(int id)
+        public IActionResult Details(int id)
         {
-            if (_context.Patients == null)
+            if (patientRepo.CheckExistance(id))
             {
-                return NotFound();
+                 return View(patientRepo.GetById(id));
             }
 
-            var patient = await _context.Patients
-                .FirstOrDefaultAsync(m => m.PatientID == id);
-            if (patient == null)
-            {
                 return NotFound();
-            }
-
-            return View();
         }
 
         // GET: Patients/Create
@@ -65,7 +58,7 @@ namespace Doctor_Appointment.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PatientID,FullName,gender,Age,PhonNum,Email,Address")] Patient patient)
+        public IActionResult Create(Patient patient)
         {
             if (ModelState.IsValid)
             {
@@ -84,19 +77,14 @@ namespace Doctor_Appointment.Controllers
         }
 
         // GET: Patients/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public IActionResult Edit(int id)
         {
-            if (id == null || _context.Patients == null)
-            {
-                return NotFound();
-            }
 
-            var patient = await _context.Patients.FindAsync(id);
-            if (patient == null)
+            if (patientRepo.CheckExistance(id))
             {
-                return NotFound();
+                 return View(patientRepo.GetById(id));
             }
-            return View(patient);
+                return NotFound();
         }
 
         // POST: Patients/Edit/5
@@ -104,7 +92,7 @@ namespace Doctor_Appointment.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("PatientID,FullName,gender,Age,PhonNum,Email,Address")] Patient patient)
+        public IActionResult Edit(int id, Patient patient)
         {
             if (id != patient.PatientID)
             {
@@ -116,18 +104,10 @@ namespace Doctor_Appointment.Controllers
                 try
                 {
                     _context.Update(patient);
-                    await _context.SaveChangesAsync();
                 }
-                catch (DbUpdateConcurrencyException)
+                catch 
                 {
-                    if (!PatientExists(patient.PatientID))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    throw new Exception();
                 }
                 return RedirectToAction(nameof(Index));
             }
@@ -135,45 +115,28 @@ namespace Doctor_Appointment.Controllers
         }
 
         // GET: Patients/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public IActionResult Delete(int id)
         {
-            if (id == null || _context.Patients == null)
+            if (patientRepo.CheckExistance(id))
             {
-                return NotFound();
+                  return View(patientRepo.GetById(id));
             }
-
-            var patient = await _context.Patients
-                .FirstOrDefaultAsync(m => m.PatientID == id);
-            if (patient == null)
-            {
                 return NotFound();
-            }
 
-            return View(patient);
         }
 
         // POST: Patients/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public IActionResult DeleteConfirmed(int id)
         {
-            if (_context.Patients == null)
+            if (patientRepo.CheckExistance(id))
             {
-                return Problem("Entity set 'MedcareDbContext.Patients'  is null.");
-            }
-            var patient = await _context.Patients.FindAsync(id);
-            if (patient != null)
-            {
-                _context.Patients.Remove(patient);
+                patientRepo.Delete(id);
             }
             
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool PatientExists(int id)
-        {
-          return (_context.Patients?.Any(e => e.PatientID == id)).GetValueOrDefault();
-        }
     }
 }

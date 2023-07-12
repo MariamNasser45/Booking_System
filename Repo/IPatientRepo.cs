@@ -9,5 +9,6 @@ namespace Doctor_Appointment.Repo
         public void Insert(Patient patient);
         public void Update(int id, Patient patient);
         public void Delete(int id);
+        public bool CheckExistance(int id);
     }
 }

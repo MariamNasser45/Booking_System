@@ -14,10 +14,12 @@ namespace Doctor_Appointment.Models
 
         [Required]
         [MinLength(10)]
+        [Display(Name = "Full Name")]
         public string FullName { get; set; }
 
         [Required]
         [EnumDataType(typeof(PGender))]
+        [Display(Name = "Gender")]
         public PGender gender { get; set; }
 
         [Required]
@@ -25,10 +27,12 @@ namespace Doctor_Appointment.Models
 
         [Required]
         [DataType(DataType.PhoneNumber)]
+        [Display(Name = "Phone Number")]
         public int PhoneNumber { get; set; }
       
         [Required]
         [DataType(DataType.EmailAddress)]
+        [Display(Name = "Email Address")]
         public string EmailAddress { get; set; }
 
         public string Address { get; set; }

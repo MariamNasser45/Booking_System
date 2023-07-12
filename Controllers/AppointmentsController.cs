@@ -26,39 +26,38 @@ namespace Doctor_Appointment.Controllers
         }
 
         // GET: Appointments
-
-        public async Task<IActionResult> Index(int PatientID)
+        public IActionResult Index(int PatientID)
         {
-
-            return View(Repo.GetAll(PatientID));
-
+            if (Repo.GetAll(PatientID).Count != 0)
+            {
+                return View(Repo.GetAll(PatientID));
+            }
+            else
+                return BadRequest("Don't have any appointments to show them");
         }
 
         // GET: Appointments/Details/5
         public IActionResult Details(int id)
         {
-            if (_context.Appointments == null)
+            //var appointment =  _context.Appointments
+            //    .Include(a => a.doctor)
+            //    .Include(a => a.patient)
+            //    .Where(m => m.appointmentID==id);
+            if (Repo.GetById(id)!=null)
             {
-                return NotFound();
+                return View(Repo.GetById(id));
             }
+            return BadRequest();
 
-            var appointment =  _context.Appointments
-                .Include(a => a.doctor)
-                .Include(a => a.patient)
-                .Where(m => m.appointmentID==id);
-            if (appointment == null)
-            {
-                return NotFound();
-            }
 
-            return View(Repo.GetById(id));
         }
 
         [Authorize(Roles = "Patient")]
         // GET: Appointments/Create
-        public IActionResult Create(int id)
+        public IActionResult Create(int id , int Patid)
         {
-            ViewData["DoctorID"] = new SelectList(_context.Doctors, "DoctorID", "FullName");
+            ViewData["DoctorID"] = new SelectList(_context.Doctors.Where(D=>D.DoctorID==id), "DoctorID", "FullName");
+
             ViewData["PatientID"] = new SelectList(_context.Patients, "PatientID", "FullName");
 
             //using ToShortDateString to ignore time only print date 
@@ -112,7 +111,7 @@ namespace Doctor_Appointment.Controllers
                 return NotFound();
             }
 
-            var appointment = _context.Appointments.FirstOrDefault(a => a.appointmentID==id);
+            var appointment = _context.Appointments.SingleOrDefault(a => a.appointmentID==id);
 
             if (appointment == null)
             {

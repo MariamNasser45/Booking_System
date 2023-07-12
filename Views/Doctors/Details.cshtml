@@ -96,6 +96,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Create" asp-controller="Appointments" asp-route-id="@Model.DoctorID" class="btn btn-outline-success">Book</a> 
+    <a asp-action="Create" asp-controller="Appointments" asp-route-id="@Model.DoctorID" asp-route-Patid="@Model.patient.PatientID" class="btn btn-outline-success">Book</a>
     <a asp-controller="Doctors" asp-action="SpecialistFilter" class="btn btn-outline-dark">Back to List</a>
 </div>

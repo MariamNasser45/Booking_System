@@ -24,7 +24,7 @@ namespace Doctor_Appointment.Controllers
         }
 
         // GET: DailyAvailbilities
-        public async Task<IActionResult> Index(int docid)
+        public IActionResult Index(int docid)
         {
             try
             {
@@ -40,25 +40,18 @@ namespace Doctor_Appointment.Controllers
         }
 
         // GET: DailyAvailbilities/Details/5
-        public async Task<IActionResult> Details(int id)
+        public IActionResult Details(int id)
         {
-            if (id == null || _context.dailyAvailbilities == null)
+            if (Daily.CheckExistance(id))
             {
-                return NotFound();
-            }
-
-            var dailyAvailbility = await _context.dailyAvailbilities
-                .FirstOrDefaultAsync(m => m.Dayid == id);
-            if (dailyAvailbility == null)
-            {
-                return NotFound();
-            }
-
             return View(Daily.GetById(id));
+            }
+            return View();
+
         }
 
         // GET: DailyAvailbilities/Create
-        public IActionResult Create()
+        public IActionResult Create(int docId)
         {
             ViewData["DoctorID"] = new SelectList(_context.Doctors, "DoctorID", "FullName");
             return View();
@@ -70,7 +63,7 @@ namespace Doctor_Appointment.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("DoctorID,Dayid,Day,Date,Clinic_Time,Isavailable")] DailyAvailbility dailyAvailbility)
+        public IActionResult Create(DailyAvailbility dailyAvailbility)
         {
             if (ModelState.IsValid)
             {
@@ -108,31 +101,26 @@ namespace Doctor_Appointment.Controllers
         }
 
         // GET: DailyAvailbilities/Edit/5
-        public async Task<IActionResult> Edit(int id)
+        public IActionResult Edit(int id, int DocId)
         {
-            //ViewBag.DoctorID = _context.Doctors.Where(d=>d.DoctorID==id).Select(d=>d.FullName).ToString();
-
-            ViewData["DoctorID"] = new SelectList(_context.Doctors, "DoctorID", "FullName");
+            ViewData["DoctorID"] = new SelectList(_context.Doctors.Where(d => d.DoctorID==DocId), "DoctorID", "FullName");
 
             if ( _context.dailyAvailbilities == null)
             {
                 return NotFound();
             }
 
-            var dailyAvailbility = await _context.dailyAvailbilities.FindAsync(id);
-            if (dailyAvailbility == null)
+            if (Daily.CheckExistance(id))
             {
-                return NotFound();
+            return View(Daily.GetById(id));
             }
-            return View(dailyAvailbility);
+            return NotFound();
         }
 
         // POST: DailyAvailbilities/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("DoctorID,Dayid,Day,Date,Clinic_Time,Isavailable")] DailyAvailbility dailyAvailbility)
+        public IActionResult Edit(int id, DailyAvailbility dailyAvailbility)
         {
             if (id != dailyAvailbility.Dayid)
             {
@@ -147,16 +135,9 @@ namespace Doctor_Appointment.Controllers
                     Index(dailyAvailbility.DoctorID);
                     return View("Index");
                 }
-                catch (DbUpdateConcurrencyException)
+                catch 
                 {
-                    if (!DailyAvailbilityExists(dailyAvailbility.Dayid))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    throw new Exception();
                 }
                 return RedirectToAction(nameof(Index));
             }
@@ -164,34 +145,23 @@ namespace Doctor_Appointment.Controllers
         }
 
         // GET: DailyAvailbilities/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public IActionResult Delete(int id)
         {
-            if (id == null || _context.dailyAvailbilities == null)
-            {
-                return NotFound();
-            }
 
-            var dailyAvailbility = await _context.dailyAvailbilities
-                .FirstOrDefaultAsync(m => m.Dayid == id);
-            if (dailyAvailbility == null)
+            if (Daily.CheckExistance(id))
             {
-                return NotFound();
+            return View(Daily.GetById(id));
             }
+            return View();
 
-            return View(dailyAvailbility);
         }
 
         // POST: DailyAvailbilities/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id, int docid)
+        public IActionResult DeleteConfirmed(int id, int docid)
         {
-            if (_context.dailyAvailbilities == null)
-            {
-                return Problem("Entity set 'MedcareDbContext.dailyAvailbilities'  is null.");
-            }
-            var dailyAvailbility = await _context.dailyAvailbilities.FindAsync(id);
-            if (dailyAvailbility != null)
+            if (Daily.CheckExistance(id))
             {
                 try
                 {
@@ -208,9 +178,5 @@ namespace Doctor_Appointment.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool DailyAvailbilityExists(int id)
-        {
-          return (_context.dailyAvailbilities?.Any(e => e.Dayid == id)).GetValueOrDefault();
-        }
     }
 }

@@ -49,7 +49,7 @@
                 <p>@item.Isavailable</p>
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Dayid" class="btn btn-outline-info">Edit</a> 
+                    <a asp-action="Edit" asp-route-id="@item.Dayid" asp-route-DocId="@item.DoctorID" class="btn btn-outline-info">Edit</a>
                 <a asp-action="Delete" asp-route-id="@item.Dayid" class="btn btn-outline-danger">Delete</a>
             </td>
         </tr>
