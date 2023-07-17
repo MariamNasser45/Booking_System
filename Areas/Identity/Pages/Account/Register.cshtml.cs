@@ -154,7 +154,7 @@ namespace Doctor_Appointment.Areas.Identity.Pages.Account
                     }
                     else
                     {
-                        returnUrl ??= Url.Content("~/Patients/Create");
+                        returnUrl ??= Url.Content("~/Doctors/SpecialistFilter");
                     }
                     _logger.LogInformation("User created a new account with password.");
 

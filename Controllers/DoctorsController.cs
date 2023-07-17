@@ -74,7 +74,7 @@ namespace Doctor_Appointment.Controllers
         public ActionResult Details(int id)
         {
             //get value of hashset for the doctor
-            ViewBag.day = Context.dailyAvailbilities.Where(d=>d.DoctorID==id).Select(d => new {Day=d.Day ,  Date = d.Date , Clinic_Time=d.Clinic_Time});
+            ViewBag.day = Context.dailyAvailbilities.Where(d=>d.DoctorID==id && d.Isavailable==true).Select(d => new {Day=d.Day ,  Date = d.Date , Clinic_Time=d.Clinic_Time});
 
             if(doctor.CheckExistance(id))
             {

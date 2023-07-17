@@ -92,5 +92,11 @@ namespace Doctor_Appointment.Repo.Services
         {
             return Context.Doctors.Any(d => d.DoctorID == id);
         }
+
+        public string CheckHomeExamination(int id)
+        {
+            return Context.Doctors.Where(d=>d.DoctorID==id).Select(d=>d.HomeExamination).ToString();
+        }
+
     }
 }

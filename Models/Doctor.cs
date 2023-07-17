@@ -82,8 +82,6 @@ namespace Doctor_Appointment.Models
 
         [Display(Name = "Wating Time")]
         public string? WatingTime { get; set; }
-
-        public Patient? patient { get; set; }
         public override string ToString()
         {
             return $"{specialist}";

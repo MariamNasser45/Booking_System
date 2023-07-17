@@ -25,7 +25,6 @@ namespace Doctor_Appointment.Models
         public int PatientID { get; set; }
         public Patient? patient { get; set; }
         public ICollection<DailyAvailbility> availableDays { get; set; } = new HashSet<DailyAvailbility>();
-
         public string DateTime { get; set; }
 
         [EnumDataType(typeof(AppointmentType))]

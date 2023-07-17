@@ -21,7 +21,7 @@ namespace Doctor_Appointment.Repo.Services
         }
 
 
-        public Appointment GetById( int Id)
+        public Appointment GetById(int Id)
         {
             return Context.Appointments.Where(d => d.appointmentID==Id)
                 .Include(d => d.doctor)
@@ -37,7 +37,9 @@ namespace Doctor_Appointment.Repo.Services
 
         public void Update(int DocId, int PatId, Appointment appointment)
         {
-            var upd_app = Context.Appointments.Where(d => d.DoctorID == DocId && d.PatientID == PatId).SingleOrDefault();
+            var upd_app = Context.Appointments.Where(d => d.DoctorID == DocId && d.PatientID == PatId).FirstOrDefault();
+            upd_app.availableDays = appointment.availableDays;
+            upd_app.AppointmentType = appointment.AppointmentType;
             upd_app.MedicalHistory = appointment.MedicalHistory;
 
             Context.Update(upd_app);

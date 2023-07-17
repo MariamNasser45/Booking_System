@@ -62,15 +62,17 @@
         <dt class="col-sm-2">
             <label asp-for="availableDays"></label>
         </dt>
-           @{
-                foreach(var item in day)
-                {
-                   <dd>
-                     @item.ToString()
-                   </dd>
-                }
-          }
+        <div class="">
 
+        @{
+          foreach(var item in day)
+            {
+               <dd>
+                 @item.ToString()
+                </dd>
+            }
+        }
+        </div>
         <dt class="col-sm-2">
             <label asp-for="Price"></label>
         </dt>
@@ -96,6 +98,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Create" asp-controller="Appointments" asp-route-id="@Model.DoctorID" asp-route-Patid="@Model.patient.PatientID" class="btn btn-outline-success">Book</a>
-    <a asp-controller="Doctors" asp-action="SpecialistFilter" class="btn btn-outline-dark">Back to List</a>
+    <a asp-action="Create" asp-controller="Appointments" asp-route-id="@Model.DoctorID" class="btn btn-outline-success">Book</a>
+    <a asp-controller="Doctors" asp-action="SpecialistFilter" class="btn btn-outline-dark">Back to Doctors List</a>
 </div>

@@ -13,7 +13,7 @@ namespace Doctor_Appointment.Repo
         public bool CheckSpecialistAndDegreeExistance(Spectialist spl, MedicalDegree medicalDegree);
         public bool CheckSpecialistExistance(Spectialist spl);
         public bool CheckDegreeExistance( MedicalDegree medicalDegree);
-
+        public string CheckHomeExamination(int id);
         public void Insert(Doctor doctor);
         public void Update(int id, Doctor doctor);
         public void Delete(int id);
