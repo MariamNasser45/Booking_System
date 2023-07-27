@@ -10,5 +10,6 @@ namespace Doctor_Appointment.Repo
         public void Update(int id, DailyAvailbility dailyAvailbility);
         public void Delete(int id);
         public bool CheckExistance(int id);
+        public List<DailyAvailbility> GetAvailbleDay(int id);
     }
 }

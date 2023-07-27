@@ -19,22 +19,26 @@ namespace Doctor_Appointment.Controllers
 
         public IAppointmentRepo Repo { get; }
         public IPatientRepo PatientRepo { get; }
+        public IDoctorRepo DoctorRepo { get; }
 
-        public AppointmentsController(ApplicationDbContext context, IAppointmentRepo repo, IPatientRepo patientRepo)
+        public AppointmentsController(ApplicationDbContext context, IAppointmentRepo repo, IPatientRepo patientRepo, IDoctorRepo doctorRepo)
         {
             _context = context;
             Repo = repo;
             PatientRepo = patientRepo;
+            DoctorRepo = doctorRepo;
         }
 
         // GET: Appointments
-        public IActionResult Index(int PatientID)
+        public IActionResult Index(string PatientName)
         {
                 try
                 {
-                    return View(Repo.GetAll(PatientID));
-                }
-                catch
+                //return View(Repo.GetAll(PatientID));
+                return View(Repo.GetAllName(PatientName));
+
+            }
+            catch
                 {
                     return BadRequest("Don't have any appointments to show them");
                 }
@@ -56,7 +60,9 @@ namespace Doctor_Appointment.Controllers
         // GET: Appointments/Create
         public IActionResult Create(int id)
         {
-            ViewData["DoctorID"] = new SelectList(_context.Doctors.Where(D=>D.DoctorID==id), "DoctorID", "FullName");
+            ViewData["DoctorID"] = new SelectList(_context.Doctors.Where(d => d.DoctorID == id), "DoctorID", "FullName");
+
+            //ViewData["DoctorID"] = DoctorRepo.GetById(id).FullName;
 
             //using ToShortDateString to ignore time only print date 
             //using Devide to convert into 12 hours format instead 24
@@ -69,8 +75,6 @@ namespace Doctor_Appointment.Controllers
         }
 
         // POST: Appointments/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         
@@ -78,6 +82,13 @@ namespace Doctor_Appointment.Controllers
         {
             try
             {
+                //if(_context.Patients.Any(p=>p.FullName==patient.FullName))
+                //{
+                //    appointment.PatientID=_context.Patients.Where(p=>p.FullName==patient.FullName).Select(p=>p.PatientID).SingleOrDefault();
+                //    Repo.Insert(appointment);
+                //    Details(appointment.appointmentID);
+                //    return View("Details");
+                //}
                     PatientRepo.Insert(patient);
                     appointment.PatientID=patient.PatientID;
                     Repo.Insert(appointment);
@@ -117,7 +128,7 @@ namespace Doctor_Appointment.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Appointment appointment)
+        public async Task<IActionResult> Edit(Appointment appointment,string PatientName)
         {
    
 
@@ -126,7 +137,7 @@ namespace Doctor_Appointment.Controllers
                 try
                 {
                     Repo.Update(appointment.DoctorID,appointment.PatientID,appointment);
-                    Index(appointment.PatientID);
+                    Index(PatientName);
                     return View("Index");
                 }
                 catch 
@@ -148,12 +159,12 @@ namespace Doctor_Appointment.Controllers
         // POST: Appointments/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public IActionResult DeleteConfirmed(int id, int PatientId)
+        public IActionResult DeleteConfirmed(int id, string PatientName)
         {
             if (Repo.GetById(id)!=null)
             {
                 Repo.Delete(id);
-                Index(PatientId);
+                Index(PatientName);
                 return View("Index");
             }
             return RedirectToAction(nameof(Index));

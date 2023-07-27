@@ -46,6 +46,6 @@
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model.appointmentID" asp-route-docId="@Model.DoctorID" class="btn btn-outline-warning">Edit</a>
-    <a asp-action="Index" asp-route-PatientID="@Model.PatientID" class="btn btn-outline-dark">My All Appointments</a>
+    <a asp-action="Index" asp-route-PatientName="@Model.patient.FullName" class="btn btn-outline-dark">My All Appointments</a>
     <a asp-controller="Doctors" asp-action="SpecialistFilter" class="btn btn-outline-dark">Back to Doctors List</a>
 </div>

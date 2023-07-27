@@ -53,5 +53,12 @@ namespace Doctor_Appointment.Repo.Services
             return Context.dailyAvailbilities.Any(d => d.Dayid == id);
         }
 
+        public List<DailyAvailbility> GetAvailbleDay(int id)
+        {
+            //return Context.dailyAvailbilities.Where(d => d.DoctorID == docid).ToList();
+            return (List<DailyAvailbility>)Context.dailyAvailbilities.Where(d => d.DoctorID == id && d.Isavailable == true)
+                .Select(d => new { d.Day, Date = d.Date.ToShortDateString(), Clinic_Time = d.Clinic_Time });
+        }
+
     }
 }

@@ -57,8 +57,8 @@
     
     <form method="post" asp-action="Delete">
         <input type="hidden" asp-for="DoctorID" />
-        <input type="hidden" asp-for="PatientID" />
-        <input type="submit" value="Submit Canclation" class="btn btn-outline-danger" /> 
-        <a asp-action="Index" asp-route-PatientID="@Model.PatientID" class="btn btn-outline-dark">My All Appointments</a>
+        <input type="hidden" asp-for="patient.FullName" />
+        <input type="submit" asp-route-PatientName="@Model.patient.FullName" value="Submit Canclation" class="btn btn-outline-danger" />
+        <a asp-action="Index" asp-route-PatientName="@Model.patient.FullName" class="btn btn-outline-dark">My All Appointments</a>
     </form>
 </div>

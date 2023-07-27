@@ -44,9 +44,9 @@
             </div>
             <span class="form-group">
                
-                <input type="submit" value="Save" class="btn btn-outline-success mt-3" style="margin-right:4px;" />
+                <input type="submit" asp-route-PatientName="@Model.patient.FullName" value="Save" class="btn btn-outline-success mt-3" style="margin-right:4px;" />
                 
-                <a asp-action="Index" asp-route-PatientID="@Model.PatientID"  class="btn btn-outline-dark mt-3">My All Appointments</a>
+                <a asp-action="Index" asp-route-PatientName="@Model.patient.FullName" class="btn btn-outline-dark mt-3">My All Appointments</a>
 
             </span>
         </form>

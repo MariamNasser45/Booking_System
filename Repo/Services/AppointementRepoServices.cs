@@ -13,6 +13,11 @@ namespace Doctor_Appointment.Repo.Services
             Context = context;
         }
 
+        public List<Appointment> GetAllName(string PatientName)
+        {
+            return Context.Appointments.Include(d => d.doctor)
+    .Include(p => p.patient).Where(d => d.patient.FullName == PatientName).ToList();
+        }
 
         public List<Appointment> GetAll(int PatientID)
         {
